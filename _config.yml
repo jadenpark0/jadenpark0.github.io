@@ -77,7 +77,7 @@ linkedin_username: jaden-park-aa19a1192
 # -----------------------------------------------------------------------------
 
 blog_name: # blog_name will be displayed in your blog page
-blog_description: Happily Lost
+blog_description: Scribbles :)
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
