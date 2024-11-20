@@ -9,3 +9,7 @@
 "RTSS":
   url: https://rtss.org
   color: "#e7c000"
+
+"arXiv":
+  url: https://arxiv.org
+  color: "#ffa500"
