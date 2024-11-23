@@ -18,6 +18,9 @@ I am a first year M.S./Ph.D. student in Computer Science at `UW-Madison`, where 
 
 My current research interest lies in improving, understanding, and analyzing foundation models, both empirically and theoretically. I ultimately envision developing deployable machine learning agents that can solve challenging real-world problems. 
 
-You can find my curriculum vitae [here](/assets/pdf/cv.pdf). 
 
-I am open to discussions - feel free to reach out to me!
+📣 _**I am actively looking for internship positions for 2025 Summer on multimodal and foundation models, in and out of US!**_  
+📩 Feel free to send me an email if there's a match :)
+
+📝 You can find my curriculum vitae [here](/assets/pdf/cv.pdf). 
+
