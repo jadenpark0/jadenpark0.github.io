@@ -53,7 +53,7 @@
         {% assign author_array_limit = site.max_author_limit %}
       {% endif %}
 
-      {%- for author in entry.author_array limit: author_array_limit -%}
+      {% comment %} {%- for author in entry.author_array limit: author_array_limit -%}
         {% assign author_is_self = false %}
         {%- assign author_last_name = author.last | remove: '¶' | remove: '&' | remove: '†' | remove: '^' -%}
         {% if site.scholar.last_name == author_last_name %}
@@ -92,7 +92,47 @@
             {{ author.last }}
           {% endif %}
         {%- endif -%}
-      {% endfor %}
+      {% endfor %} {% endcomment %}
+      {%- for author in entry.author_array limit: author_array_limit -%}
+        {% assign author_is_self = false %}
+        {%- assign author_last_name = author.last | remove: '¶' | remove: '&' | remove: '†' | remove: '^' -%}
+        {% if site.scholar.last_name == author_last_name %}
+          {% if site.scholar.first_name == author.first %}
+            {% assign author_is_self = true %}
+          {% endif %}
+        {%- endif -%}
+        {% assign coauthor_url = null %}
+        {%- assign clean_last_name = author_last_name | downcase | remove_accents -%}
+        {% if site.data.coauthors[clean_last_name] %}
+          {%- for coauthor in site.data.coauthors[clean_last_name] -%}
+            {% if coauthor.firstname contains author.first %}
+              {%- assign coauthor_url = coauthor.url -%}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {%- endif -%}
+      
+        <!-- Add separator logic -->
+        {%- if forloop.index > 1 -%}
+          {%- if forloop.last and author_array_limit == author_array_size -%}
+            &nbsp;and&nbsp;
+          {%- else -%}
+            ,&nbsp;
+          {%- endif -%}
+        {%- endif -%}
+      
+        <!-- Render author -->
+        {%- if author_is_self -%}
+          <strong>{{- author.first -}} &nbsp; {{- author.last | remove: '*' -}}</strong>
+        {%- else -%}
+          {%- if coauthor_url -%}
+            <a href="{{ coauthor_url }}">{{- author.first -}} &nbsp; {{- author.last -}}</a>
+          {%- else -%}
+            {{- author.first -}} &nbsp; {{- author.last -}}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor %}
+      {%- assign more_authors = author_array_size | minus: author_array_limit -%}
       {%- assign more_authors = author_array_size | minus: author_array_limit -%}
 
       {%- assign more_authors_hide = more_authors | append: ' more author' -%}
