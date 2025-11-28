@@ -29,8 +29,8 @@
               <!-- Title with Company and Date -->
               <div class="title">
                 {% if exp.company %}
-                  {% if exp.url %}
-                    <a href="{{ exp.url }}" target="_blank">{{ exp.company }}</a>
+                  {% if exp.website %}
+                    <a href="{{ exp.website }}" target="_blank">{{ exp.company }}</a>
                   {% else %}
                     {{ exp.company }}
                   {% endif %}

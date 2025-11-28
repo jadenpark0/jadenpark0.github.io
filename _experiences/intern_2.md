@@ -4,7 +4,7 @@ date: 2025-06-01 00:00:00-0000
 company: "Adobe Research"
 location: "San Jose, CA, USA"
 date_range: "May 2025 – Jan 2026"
-url: "https://research.adobe.com/"
+website: "https://research.adobe.com/"
 topic: "Material-aware multi-modal segmentation"
 advisors:
   - name: "Michael Fischer"
