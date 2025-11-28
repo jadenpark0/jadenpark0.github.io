@@ -132,6 +132,11 @@ collections:
       layout: post
     output: true
     permalink: /:collection/:title/
+  experiences:
+    defaults:
+      layout: post
+    output: true
+    permalink: /:collection/:title/
   projects:
     output: true
     permalink: /:collection/:title/
@@ -198,7 +203,7 @@ plugins:
   - jekyll-imagemagick
   - jekyll-jupyter-notebook
   - jekyll-link-attributes
-  - jekyll-minifier
+  # - jekyll-minifier
   - jekyll-paginate-v2
   - jekyll-regex-replace
   - jekyll/scholar

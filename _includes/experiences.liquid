@@ -1,0 +1,90 @@
+<div class="publications">
+  {% assign experiences_collection = site.experiences %}
+  {% if experiences_collection != blank and experiences_collection.size > 0 %}
+    {% assign experiences = experiences_collection | sort: 'date' | reverse %}
+    <ol class="bibliography">
+      {% for exp in experiences %}
+        <li>
+          <div class="row">
+            {% if exp.preview %}
+              <div class="col-sm-2 preview">
+                {% if exp.preview contains '://' %}
+                  <img class="preview z-depth-1 rounded" src="{{ exp.preview }}" alt="{{ exp.company }}">
+                {% else %}
+                  {% assign preview_path = exp.preview | prepend: '/assets/img/experiences/' %}
+                  {%
+                    include figure.liquid
+                    loading="eager"
+                    path=preview_path
+                    sizes = "200px"
+                    class="preview z-depth-1 rounded"
+                    zoomable=false
+                    alt=exp.company
+                  %}
+                {% endif %}
+              </div>
+            {% endif %}
+            
+            <div class="{% if exp.preview %}col-sm-10{% else %}col-sm-12{% endif %}">
+              <!-- Title with Company and Date -->
+              <div class="title">
+                {% if exp.company %}
+                  {% if exp.url %}
+                    <a href="{{ exp.url }}" target="_blank">{{ exp.company }}</a>
+                  {% else %}
+                    {{ exp.company }}
+                  {% endif %}
+                {% else %}
+                  {{ exp.title }}
+                {% endif %}
+                {% if exp.date_range %}
+                  | {{ exp.date_range }}
+                {% elsif exp.date %}
+                  | {{ exp.date | date: '%b %Y' }}
+                {% endif %}
+              </div>
+              
+              <!-- Location -->
+              {% if exp.location %}
+                <div class="author">
+                  {{ exp.location }}
+                </div>
+              {% endif %}
+              
+              <!-- Topic -->
+              {% if exp.topic %}
+                <div class="author">
+                  <strong>Topic:</strong> {{ exp.topic }}
+                </div>
+              {% endif %}
+              
+              <!-- Advisors -->
+              {% if exp.advisors %}
+                <div class="author">
+                  <strong>Advisors:</strong>
+                  {% for advisor in exp.advisors %}
+                    {% if advisor.url %}
+                      <a href="{{ advisor.url }}" target="_blank">{{ advisor.name }}</a>
+                    {% else %}
+                      {{ advisor.name }}
+                    {% endif %}
+                    {% unless forloop.last %}, {% endunless %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+              
+              <!-- Description/Content -->
+              {% if exp.content %}
+                <div class="description">
+                  {{ exp.content | remove: '<p>' | remove: '</p>' | emojify | strip }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>No experiences listed yet.</p>
+  {% endif %}
+</div>

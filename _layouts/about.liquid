@@ -54,6 +54,17 @@ layout: default
     <div style="line-height:50%;">
       <br>
     </div>
+    <!-- Experience -->
+    {% if page.experiences %}
+      <h2>
+        <a href="#" style="color: inherit">Experience</a>
+      </h2>
+      {% include experiences.liquid %}
+    {% endif %}
+
+    <div style="line-height:50%;">
+      <br>
+    </div>
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <h2>
