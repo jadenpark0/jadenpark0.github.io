@@ -691,7 +691,22 @@ footer.sticky-bottom {
     li {
       margin-bottom: 1rem;
 
+      > .row {
+        align-items: center;
+      }
+
       .preview {
+        img,
+        picture,
+        figure {
+          width: 100%;
+          height: auto;
+          max-width: 100%;
+        }
+        figure img {
+          display: block;
+          margin: 0 auto;
+        }
       }
 
       .abbr {
@@ -722,6 +737,9 @@ footer.sticky-bottom {
       }
 
       .author {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+
         a {
           border-bottom: 1px dashed var(--global-theme-color);
 
