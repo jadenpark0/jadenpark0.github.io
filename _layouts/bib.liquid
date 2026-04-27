@@ -122,13 +122,14 @@
         {%- endif -%}
       
         <!-- Render author -->
+        {%- assign display_last = author.last | remove: '*' | replace: '^', '<sup>*</sup>' -%}
         {%- if author_is_self -%}
-          <strong>{{- author.first -}} &nbsp; {{- author.last | remove: '*' -}}</strong>
+          <strong>{{- author.first -}} &nbsp; {{ display_last }}</strong>
         {%- else -%}
           {%- if coauthor_url -%}
-            <a href="{{ coauthor_url }}">{{- author.first -}} &nbsp; {{- author.last -}}</a>
+            <a href="{{ coauthor_url }}">{{- author.first -}} &nbsp; {{ display_last }}</a>
           {%- else -%}
-            {{- author.first -}} &nbsp; {{- author.last -}}
+            {{- author.first -}} &nbsp; {{ display_last }}
           {%- endif -%}
         {%- endif -%}
       {%- endfor %}
