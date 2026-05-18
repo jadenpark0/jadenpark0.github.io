@@ -24,7 +24,7 @@
                 {% endif %}
               </div>
             {% endif %}
-            
+
             <div class="{% if exp.preview %}col-sm-9{% else %}col-sm-12{% endif %}">
               <!-- Title with Company and Date -->
               <div class="title">
@@ -43,21 +43,19 @@
                   | {{ exp.date | date: '%b %Y' }}
                 {% endif %}
               </div>
-              
+
               <!-- Location -->
               {% if exp.location %}
                 <div class="author">
                   {{ exp.location }}
                 </div>
               {% endif %}
-              
+
               <!-- Topic -->
               {% if exp.topic %}
-                <div class="author">
-                  <strong>Topic:</strong> {{ exp.topic }}
-                </div>
+                <div class="author"><strong>Topic:</strong> {{ exp.topic }}</div>
               {% endif %}
-              
+
               <!-- Advisors -->
               {% if exp.advisors %}
                 <div class="author">
@@ -72,7 +70,7 @@
                   {% endfor %}
                 </div>
               {% endif %}
-              
+
               <!-- Description/Content -->
               {% if exp.content %}
                 <div class="description">

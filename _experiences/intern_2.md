@@ -15,4 +15,3 @@ advisors:
     url: "https://krsingh.cs.ucdavis.edu/"
 preview: "adobe.png"
 ---
-

@@ -8,10 +8,8 @@ website: "https://www.krafton.ai/en/"
 topic: "Image clustering, in-context learning and text-based benchmark generation for agents"
 advisors:
   - name: "Kangwook Lee"
-    url: "https://kangwooklee.com/aboutme/"
+    url: "https://kangwooklee.com/"
   - name: "Dimitris Papailiopoulos"
     url: "https://papail.io/"
 preview: "krafton.png"
 ---
-
-
