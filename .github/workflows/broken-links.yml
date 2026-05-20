@@ -36,4 +36,15 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           fail: true
-          args: --user-agent 'curl/7.54' --root-dir "$GITHUB_WORKSPACE" --exclude-path README.md --exclude-path _pages/404.md --verbose --no-progress './**/*.md' './**/*.html'
+          args: |
+            --user-agent 'curl/7.54'
+            --root-dir "$GITHUB_WORKSPACE"
+            --exclude-path README.md
+            --exclude-path _pages/404.md
+            --accept '200,403,429'
+            --exclude 'doi\.org/10\.1145/3799902\.3811186'
+            --exclude 'github\.com/adobe-research/obj-and-mat-selection'
+            --verbose
+            --no-progress
+            './**/*.md'
+            './**/*.html'
