@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="MAOAM: Unified Object & Material Selection with Vision-Language Models. SIGGRAPH 2026." />
+    <meta property="og:title" content="MAOAM: Unified Object & Material Selection with Vision-Language Models" />
+    <meta property="og:description" content="A unified VLM-based selection framework for objects and materials, via clicks or text. SIGGRAPH 2026." />
+    <meta property="og:image" content="static/images/main/teaser_lq-1.png" />
+    <title>MAOAM — Unified Object & Material Selection with VLMs</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|JetBrains+Mono" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="./static/css/maoam.css" />
+  </head>
+
+  <body>
+    <!-- ============================================================== -->
+    <!-- HERO                                                            -->
+    <!-- ============================================================== -->
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop has-text-centered">
+          <img class="conf-logo" src="./static/images/logos/siggraph_2026.png" alt="SIGGRAPH 2026 — Los Angeles, 19–23 July" />
+
+          <h1 class="hero-title">MAOAM: Unified Object &amp; Material Selection with Vision-Language Models</h1>
+
+          <!-- Authors -->
+          <div class="author-list">
+            <a href="https://jadenpark0.github.io/">Jaden Park</a><sup>1</sup>, <a href="https://valentin.deschaintre.fr/">Valentin Deschaintre</a
+            ><sup>2</sup>, <a href="https://research.adobe.com/person/jason-kuen/">Jason Kuen</a><sup>2</sup>,
+            <a href="https://kangning-liu.github.io/">Kangning Liu</a><sup>2</sup>, <a href="https://iliyan.com/">Iliyan Georgiev</a><sup>2</sup>,
+            <a href="https://krsingh.cs.ucdavis.edu/">Krishna Kumar Singh</a><sup>2</sup>,
+            <a href="https://pages.cs.wisc.edu/~yongjaelee/">Yong Jae Lee</a><sup>2</sup>,
+            <a href="https://mfischer-ucl.github.io/">Michael Fischer</a><sup>2</sup>
+          </div>
+
+          <!-- Affiliations with logos -->
+          <div class="affil-row">
+            <div class="affil">
+              <span class="affil-name"><sup>1</sup>University of Wisconsin–Madison</span>
+              <img class="logo-img logo-uw" src="./static/images/logos/uw_madison.png" alt="University of Wisconsin–Madison" />
+            </div>
+            <div class="affil">
+              <span class="affil-name"><sup>2</sup>Adobe Research</span>
+              <img class="logo-img" src="./static/images/logos/adobe.png" alt="Adobe Research" />
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div class="link-buttons">
+            <a href="./static/pdfs/maoam_paper.pdf" class="button">
+              <span class="icon"><i class="fa-solid fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </a>
+            <a href="https://doi.org/10.1145/3799902.3811186" class="button">
+              <span class="icon"><i class="fa-solid fa-link"></i></span>
+              <span>ACM</span>
+            </a>
+            <a href="https://github.com/adobe-research/obj-and-mat-selection" class="button">
+              <span class="icon"><i class="fa-brands fa-github"></i></span>
+              <span>Code</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TEASER                                                          -->
+    <!-- ============================================================== -->
+    <section class="section" style="padding-top: 1rem">
+      <div class="container is-max-desktop">
+        <div class="teaser-figure">
+          <img src="./static/images/main/teaser_lq-1.png" alt="MAOAM teaser" />
+          <p class="figure-caption">
+            Our method, MAOAM, enables click- and text-based selection of both materials and objects via a single model with a unified interface.
+            Given an input image, users can interact with the selection model via clicks (second column, denoted as overlaid white star) or text
+            queries (third column onwards).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TABLE OF CONTENTS                                               -->
+    <!-- ============================================================== -->
+    <section class="section" style="padding-top: 0; padding-bottom: 1rem">
+      <div class="container is-max-desktop">
+        <nav class="toc" aria-label="Table of contents">
+          <span class="toc-label">Contents</span>
+          <ul>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#method">Method</a></li>
+            <li><a href="#comparisons">Qualitative Comparison with SOTA Baselines</a></li>
+            <li><a href="#more-results">More Qualitative Results</a></li>
+            <li><a href="#quantitative">Quantitative Results</a></li>
+            <li><a href="#capabilities">Desirable Properties of MAOAM</a></li>
+            <li><a href="#dataset">Dataset &amp; Data Generation Pipeline</a></li>
+            <li><a href="#limitations">Limitations</a></li>
+            <li><a href="#acknowledgements">Acknowledgements</a></li>
+            <li><a href="#bibtex">BibTeX</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- ABSTRACT                                                        -->
+    <!-- ============================================================== -->
+    <section class="section" id="abstract">
+      <div class="container is-max-desktop">
+        <h2 class="section-title">Abstract</h2>
+
+        <div class="tldr">
+          <strong>TL;DR.</strong> MAOAM is a unified segmentation model that enables click- and text-based selection of both materials and objects.
+          Users interact with the model via clicks (overlaid white star) or text queries. MAOAM is trained with rich and salient text descriptions,
+          which unlock generalization and robustness behaviors as demonstrated in <a href="#capabilities">Desirable Properties of MAOAM</a>.
+        </div>
+
+        <div class="abstract-text">
+          <p>
+            Selection is a core operation in interactive image editing, enabling tasks such as composition or manipulation. Beyond objects,
+            material-based selection is particularly valuable for tasks like re-texturing surfaces or consistently editing all instances of a specific
+            material in a scene. However,
+            <strong>existing VLM-based selection methods are largely object-centric and typically support only a single interaction modality</strong>,
+            limiting their applicability in real editing workflows.
+          </p>
+          <p>
+            A key challenge is that material selection datasets with text annotations are unavailable. We therefore propose a
+            <strong>scalable data generation pipeline</strong>: we collect real and synthetic images with material masks, then leverage VLMs to
+            generate material descriptions with rich visual-semantic information. The resulting corpus contains ~104K dense material masks across
+            three sources — <em>RealMat</em> (~49K hand-annotated Pexels images), <em>SynMat</em> (~55K Blender + Evermotion renders), and
+            <em>SAMa</em> (~3.3K multi-view video frames) — each paired with six description variants ranging from terse 10-word labels to 50-word
+            descriptions covering color, finish, geometry, and spatial context.
+          </p>
+          <p>
+            Using the generated data, we train MAOAM with a multi-task objective over click- and text-based selection, along with an auxiliary VQA
+            task derived from the material descriptions to facilitate deeper material understanding.
+            <strong>The resulting model selects objects or materials from clicks, text, or both, and generalizes across natural user queries</strong>
+            — from terse phrases to long compositional descriptions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================================== -->
+    <!-- METHOD                                                          -->
+    <!-- ============================================================== -->
+    <section class="section" id="method">
+      <div class="container is-max-desktop">
+        <h2 class="section-title">Method</h2>
+        <div class="pipeline-fig">
+          <img src="./static/images/main/pipeline-1.png" alt="MAOAM architecture overview" />
+        </div>
+        <p class="figure-caption">
+          Given an input image, MAOAM takes a task prompt specifying the selection criteria (objects or materials) alongside a user prompt in click or
+          text. If a click is provided, stars are overlaid onto the image as visual cues. The VLM's CLIP encoder and projection layer encode the image
+          features into the language space. The LLM processes the features and produces a <code>[SEG]</code> token, which is projected via an MLP and
+          used as a prompt for the SAM-based mask decoder. We train with a multi-task objective over click-based selection, text-based selection, and
+          an auxiliary VQA task; <span style="color: #1f6feb; font-weight: 600">blue</span> denotes frozen and
+          <span style="color: #d93636; font-weight: 600">red</span> trainable parameters.
+        </p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================================== -->
+    <!-- COMPARISONS                                                     -->
+    <!-- ============================================================== -->
+    <section class="section" id="comparisons">
+      <div class="container is-max-widescreen">
+        <h2 class="section-title">Qualitative Comparison with SOTA Baselines</h2>
+
+        <h3 class="subsection-title">Material selection</h3>
+        <div class="full-fig">
+          <img src="./static/images/main/comparison_new-1.png" alt="Material selection comparison" />
+        </div>
+        <p class="figure-caption">
+          Click-based (first two rows) and text-based (last two rows) material selection against SAM3, Materialistic, LISA, GLaMM, and Sa2VA. LISA,
+          GLaMM, and SAM3 occasionally produce empty masks when the selection criterion is too complicated or foreign to their vocabulary.
+          Materialistic does not support text-based queries (denoted n/a).
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 3rem">Object selection</h3>
+        <div class="full-fig">
+          <img src="./static/images/main/comparison_obj_nomat-1.png" alt="Object selection comparison" />
+        </div>
+        <p class="figure-caption">
+          Object selection comparison. MAOAM performs on par with, and often better than, the strong object-centric baselines — reasoning about
+          materials does not deteriorate object-level performance.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- MORE QUALITATIVE (Suppl. Fig. 2)                                -->
+    <!-- ============================================================== -->
+    <section class="section" id="more-results">
+      <div class="container is-max-widescreen">
+        <h2 class="section-title">More Qualitative Results</h2>
+        <div class="full-fig">
+          <img src="./static/images/supp/additional_examples_smaller-1.png" alt="Additional MAOAM examples" />
+        </div>
+        <p class="figure-caption">
+          Additional examples of our method on material selection (first three rows) and object selection (last three rows). We show both click-based
+          queries (first four columns) and prompt-based queries (last four columns).
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- QUANT TABLE                                                     -->
+    <!-- ============================================================== -->
+    <section class="section" id="quantitative">
+      <div class="container is-max-desktop">
+        <h2 class="section-title">Quantitative Results</h2>
+
+        <div class="table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th rowspan="2" class="row-name">Method</th>
+                <th colspan="3">Material — Text (mIoU)</th>
+                <th colspan="3">Material — Click (mIoU)</th>
+              </tr>
+              <tr>
+                <th>RealMat</th>
+                <th>SynMat</th>
+                <th>SAMa</th>
+                <th>RealMat</th>
+                <th>SynMat</th>
+                <th>SAMa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="row-name">SAM3</td>
+                <td>0.263</td>
+                <td>0.224</td>
+                <td>0.068</td>
+                <td>0.538</td>
+                <td>0.505</td>
+                <td>0.623</td>
+              </tr>
+              <tr>
+                <td class="row-name">Materialistic</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>0.524</td>
+                <td>0.680</td>
+                <td>0.535</td>
+              </tr>
+              <tr>
+                <td class="row-name">LISA</td>
+                <td>0.332</td>
+                <td>0.319</td>
+                <td>0.215</td>
+                <td>0.129</td>
+                <td>0.094</td>
+                <td>0.056</td>
+              </tr>
+              <tr>
+                <td class="row-name">GLaMM</td>
+                <td>0.349</td>
+                <td>0.328</td>
+                <td>0.260</td>
+                <td>0.185</td>
+                <td>0.159</td>
+                <td>0.101</td>
+              </tr>
+              <tr>
+                <td class="row-name">Sa2VA</td>
+                <td>0.473</td>
+                <td>0.431</td>
+                <td>0.471</td>
+                <td>0.260</td>
+                <td>0.242</td>
+                <td>0.378</td>
+              </tr>
+              <tr class="ours">
+                <td class="row-name">MAOAM</td>
+                <td class="best">0.740</td>
+                <td class="best">0.608</td>
+                <td class="best">0.685</td>
+                <td class="best">0.808</td>
+                <td class="best">0.766</td>
+                <td class="best">0.747</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure-caption">
+          MAOAM outperforms baselines by <strong>67.5% avg mIoU over Sa2VA</strong> on text-based material selection, and <strong>35.5%</strong> over
+          Materialistic on click-based material selection.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 3rem">VQA accuracy on material datasets</h3>
+        <div class="table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th rowspan="2" class="row-name">Method</th>
+                <th colspan="2">RealMat</th>
+                <th colspan="2">SynMat</th>
+                <th colspan="2">SAMa</th>
+              </tr>
+              <tr>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q1</th>
+                <th>Q2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="row-name">Qwen2.5-VL-7B</td>
+                <td>0.584</td>
+                <td>0.318</td>
+                <td>0.543</td>
+                <td>0.288</td>
+                <td>0.480</td>
+                <td>0.564</td>
+              </tr>
+              <tr>
+                <td class="row-name">Sa2VA</td>
+                <td>0.484</td>
+                <td>0.311</td>
+                <td>0.510</td>
+                <td>0.305</td>
+                <td>0.380</td>
+                <td>0.432</td>
+              </tr>
+              <tr class="ours">
+                <td class="row-name">MAOAM</td>
+                <td class="best">0.858</td>
+                <td class="best">0.974</td>
+                <td class="best">0.795</td>
+                <td class="best">0.979</td>
+                <td class="best">0.749</td>
+                <td class="best">0.858</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure-caption">
+          4-way multiple-choice accuracy. <strong>Q1</strong>: distractors sampled from other regions. <strong>Q2</strong>: hard-negative mining
+          (visually plausible paraphrases). MAOAM does <em>better</em> on Q2, suggesting fine-grained material understanding rather than surface
+          pattern matching. Full numbers (RefCOCO, EntitySeg, ablations) in the <a href="./static/pdfs/maoam_paper.pdf">paper</a>.
+        </p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================================== -->
+    <!-- CAPABILITIES GALLERY                                            -->
+    <!-- ============================================================== -->
+    <section class="section" id="capabilities">
+      <div class="container is-max-desktop">
+        <h2 class="section-title">Desirable Properties of MAOAM</h2>
+        <p class="section-subtitle">A gallery of capabilities that emerge from our training recipe.</p>
+
+        <!-- 1. Unified object x material -->
+        <div class="showcase-block">
+          <h3>Unified object &times; material selection</h3>
+          <p class="lead">
+            Material queries pick the relevant subset, object queries pick all instances, joint queries like <em>"brown eggs"</em> intersect both
+            criteria &mdash; all from the same model.
+          </p>
+          <img src="./static/images/supp/objects_and_materials_smaller-1.png" alt="Joint object-material reasoning" />
+        </div>
+
+        <!-- 2. Emergent refinement -->
+        <div class="showcase-block">
+          <h3>Click + text together &mdash; emergent refinement</h3>
+          <p class="lead">
+            Training only ever sees one modality at a time, yet at inference the model combines them. Start with a text prompt, then layer on clicks
+            to refine the selection &mdash; exactly how editors actually work.
+          </p>
+          <img src="./static/images/main/refinement-1.png" alt="Emergent refinement with progressive clicks" />
+        </div>
+
+        <!-- 3. Same click, different intent -->
+        <div class="showcase-block">
+          <h3>Same click, different intent</h3>
+          <p class="lead">
+            The same click yields different selections under different text prompts &rarr; pick the whole object, just one material, or a specific
+            instance.
+          </p>
+          <img src="./static/images/supp/varyingprompts2-1.png" alt="Varying text prompts on the same click" />
+        </div>
+
+        <!-- 4. Spatial reasoning -->
+        <div class="showcase-block">
+          <h3>Spatial reasoning</h3>
+          <p class="lead">
+            Because the generated descriptions include phrases like <em>"above the table"</em> or <em>"on the left"</em>, MAOAM grounds spatial
+            queries relative to other things in the scene.
+          </p>
+          <img src="./static/images/supp/spatialreasoning-1.png" alt="Spatial reasoning examples" />
+        </div>
+
+        <!-- 5. Material-aware editing -->
+        <div class="showcase-block">
+          <h3>Material-aware editing</h3>
+          <p class="lead">
+            Selection masks from click- and text-based queries drop straight into editing pipelines &mdash; re-texture surfaces, swap one material for
+            another, or push consistent appearance edits across a whole scene.
+          </p>
+          <img src="./static/images/main/editing.png" alt="Image editing using MAOAM masks" />
+        </div>
+
+        <!-- 6. Fine-grained masks -->
+        <div class="showcase-block">
+          <h3>Fine-grained masks</h3>
+          <p class="lead">
+            Crisp boundaries on intricate targets such as fences and insects &mdash; without the explicit refinement modules used by SAM-HQ. The
+            vanilla SAM decoder is enough when the conditioning is right.
+          </p>
+          <img src="./static/images/main/finegrained-1.png" alt="Fine-grained mask quality (SAM-HQ dataset)" />
+        </div>
+
+        <!-- 7. Color vs. material disambiguation -->
+        <div class="showcase-block">
+          <h3>Color vs. material disambiguation</h3>
+          <p class="lead">
+            Two yellow objects, only one of them is plastic. MAOAM separates appearance from material &mdash; for both click and text prompts.
+          </p>
+          <img src="./static/images/supp/disambiguation-1.png" alt="Color vs material disambiguation" />
+        </div>
+
+        <!-- 8. Star-overlay robustness -->
+        <div class="showcase-block">
+          <h3>Star-overlay robustness</h3>
+          <p class="lead">
+            When a real star happens to be in the image, MAOAM still follows the user's click and ignores the natural one. With a text-only prompt
+            <em>"yellow star"</em> (no click), it correctly segments the actual stars &mdash; the overlay convention does not confuse the model.
+          </p>
+          <img src="./static/images/supp/star_in_image-1.png" alt="Robustness to stars in the image" />
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================================== -->
+    <!-- DATASET                                                         -->
+    <!-- ============================================================== -->
+    <section class="section" id="dataset">
+      <div class="container is-max-desktop">
+        <h2 class="section-title">Dataset &amp; Data Generation Pipeline</h2>
+
+        <div class="abstract-text">
+          <p>
+            Training a unified selection model requires material datasets with dense mask annotations and rich text descriptions. Existing material
+            datasets either lack textual descriptions, are available only as flat material maps, or are tied to a specific domain. To address this, we
+            collect new material data with dense mask annotations and develop a <strong>VLM-based pipeline</strong> to generate detailed text
+            descriptions.
+          </p>
+        </div>
+
+        <div class="full-fig" style="margin-top: 2rem">
+          <img src="./static/images/main/dataset-1.png" alt="Material dataset examples" />
+        </div>
+        <p class="figure-caption">
+          Example annotations. The second row shows dense, per-pixel material masks overlaid on the image, alongside two versions of our generated
+          text descriptions: one including the object (top row) and one focusing on the material alone (bottom row).
+        </p>
+
+        <!-- Material sources -->
+        <h3 class="subsection-title" style="margin-top: 3.5rem">Material mask sources</h3>
+        <div class="abstract-text">
+          <p>
+            We collect material mask data from both <em>real</em> and <em>synthetic</em> sources to capture natural diversity and precise, controlled
+            annotations.
+          </p>
+        </div>
+        <div class="stat-stack">
+          <div class="stat-card">
+            <div class="stat-num">~49K</div>
+            <div class="stat-label">
+              <strong>RealMat</strong> · ~8K real images from <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>,
+              hand-annotated with material masks.
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">~55K</div>
+            <div class="stat-label">
+              <strong>SynMat</strong> · ~5.5K Blender renders from 132
+              <a href="https://www.evermotion.org" target="_blank" rel="noopener">Evermotion</a> scenes with semantically valid material assignments
+              (a sofa is leather, not stone).
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">~3.3K</div>
+            <div class="stat-label">
+              <strong>SAMa</strong> · ~1.3K multi-view video frames from
+              <a href="https://mfischer-ucl.github.io/sama/" target="_blank" rel="noopener">SAMa</a>; assignments aren't always semantically
+              meaningful but are consistent across object parts.
+            </div>
+          </div>
+        </div>
+
+        <!-- Description generation -->
+        <h3 class="subsection-title" style="margin-top: 3.5rem">Description generation</h3>
+        <div class="abstract-text">
+          <p>
+            Human annotation provides high-quality labels but is prohibitively expensive at scale. We use
+            <strong>Qwen3-VL-235B-A22B-Thinking</strong> with Set-of-Marks prompting to generate candidate annotations, then incorporate quality
+            control through model-based verification and targeted human review.
+          </p>
+          <p>
+            For each marked region, we generate three types of descriptions: <strong>(i)</strong> a short material description paired with an entity
+            label (e.g. <em>"the white ceramic chair"</em>); <strong>(ii)</strong> a short material description with spatial information, absolute
+            (<em>"bottom right corner"</em>) or relative (<em>"above the table"</em>); and <strong>(iii)</strong> a longer, self-contained material
+            description that does not rely on context.
+          </p>
+          <p>
+            We sample <strong>6 variants</strong> per region from 10 to 50 words. Model-based verification fixes incorrect grounding and
+            instruction-following; manual filtering retains <strong>~80%</strong> of the validation samples — 1,797 / 2,216 from RealMat, 2,458 /
+            3,072 from SynMat, and 258 / 352 from SAMa.
+          </p>
+        </div>
+
+        <!-- VQA generation -->
+        <h3 class="subsection-title" style="margin-top: 3.5rem">VQA generation with hard-negative mining</h3>
+        <div class="abstract-text">
+          <p>
+            Training on VQA encourages fine-grained material understanding through reasoning in text. We formulate two variants of a 4-way
+            multiple-choice task. <strong>Q1</strong> samples distractors from other regions in the same image (or other images, if too few materials
+            are present). <strong>Q2</strong> introduces hard-negative mining: the answer's description is paraphrased into a visually plausible but
+            incorrect alternative — e.g. <em>"brown wood with dark streaks"</em> → <em>"horizontally grained light wood"</em>.
+          </p>
+        </div>
+        <div class="full-fig" style="margin-top: 2rem">
+          <img src="./static/images/main/vqa_gen-1.png" alt="VQA generation pipeline" />
+        </div>
+        <p class="figure-caption">
+          VQA generation with hard-negative mining. The VLM receives a Set-of-Marks-overlaid image (numbered circles) and paraphrases the material
+          description for both the answer and the negative candidate to produce three distractors. Paraphrased parts are color-coded.
+        </p>
+
+        <!-- Composition -->
+        <h3 class="subsection-title" style="margin-top: 3.5rem">Training data composition</h3>
+        <div class="abstract-text">
+          <p>
+            To train a unified model for both object- and material-level selection, we additionally incorporate publicly available object segmentation
+            datasets: <strong>RefCOCO / RefCOCO+ / RefCOCOg</strong> for text-based object selection, and <strong>EntitySeg</strong> for click-based
+            object selection. The combined corpus contains <strong>~190K training samples</strong> at an approximate <strong>1:1 ratio</strong> of
+            material- to object-centric data, spanning diverse selection prompts and criteria.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================================== -->
+    <!-- LIMITATIONS                                                     -->
+    <!-- ============================================================== -->
+    <section class="section" id="limitations">
+      <div class="container is-max-desktop">
+        <h2 class="section-title">Limitations</h2>
+        <div class="full-fig narrow-fig">
+          <img src="./static/images/main/limitations-1.png" alt="Limitations" />
+        </div>
+        <p class="figure-caption">
+          Two failure modes. <strong>Left:</strong> VLM reasoning — the model fails to distinguish mortar from bricks. Reasoning is bounded by the VLM
+          backbone and may benefit from added test-time compute. <strong>Right:</strong> Mask decoding — the decoder fails on a coarse VLM image
+          encoder, suggesting that adding refinement modules (e.g.&nbsp;ViTMatte) would improve fine-grained boundary quality.
+        </p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================================== -->
+    <!-- ACKNOWLEDGEMENTS                                                -->
+    <!-- ============================================================== -->
+    <section class="section" id="acknowledgements">
+      <div class="container is-max-desktop">
+        <h2 class="section-title">Acknowledgements</h2>
+        <p class="abstract-text" style="font-size: 0.95rem">
+          This work was supported in part by NSF IIS-2404180 and the Institute of Information &amp; Communications Technology Planning &amp;
+          Evaluation (IITP) grant funded by the Korea government (MSIT) (No.&nbsp;2022-0-00871,
+          <em>Development of AI Autonomy and Knowledge Enhancement for AI Agent Collaboration</em>). The authors thank Sudeep Katakol for his help in
+          data generation, and Zijun Wei, Yash Savani, and Soochahn Lee for helpful discussions.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- BIBTEX                                                          -->
+    <!-- ============================================================== -->
+    <section class="section" id="bibtex">
+      <div class="container is-max-desktop">
+        <h2 class="section-title">BibTeX</h2>
+        <pre class="bibtex">
+@inproceedings{park2026maoam,
+  title     = {MAOAM: Unified Object and Material Selection with Vision-Language Models},
+  author    = {Park, Jaden and Deschaintre, Valentin and Kuen, Jason and
+               Liu, Kangning and Georgiev, Iliyan and Singh, Krishna Kumar and
+               Lee, Yong Jae and Fischer, Michael},
+  booktitle = {ACM SIGGRAPH 2026 Conference Papers},
+  year      = {2026},
+  publisher = {ACM},
+  doi       = {10.1145/3799902.3811186},
+}</pre
+        >
+      </div>
+    </section>
+
+    <footer class="maoam-footer">Template adapted from <a href="https://nerfies.github.io/">Nerfies</a> · © 2026 the authors</footer>
+  </body>
+</html>
