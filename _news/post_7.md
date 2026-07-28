@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-📄 Our work <a href="https://openreview.net/forum?id=PQFkScoGqz">DocHop</a> and <a href="https://openreview.net/forum?id=PQFkScoGqz">AVS-Bench</a> have been accepted at ICML and DMLR!
+📄 Our work <a href="https://openreview.net/pdf?id=PQFkScoGqz">DocHop</a> and <a href="https://openreview.net/pdf?id=PQFkScoGqz">AVS-Bench</a> have been accepted at ICML and DMLR!

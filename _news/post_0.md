@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-🚀 Starting my internship at <a href="https://www.krafton.ai/en/">Krafton AI</a>.
+🚀 Starting my internship at <a href="https://www.krafton.ai/">Krafton AI</a>.
