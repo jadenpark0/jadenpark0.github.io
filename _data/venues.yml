@@ -13,3 +13,11 @@
 "arXiv":
   url: https://arxiv.org
   color: "#ffa500"
+
+"DMLR":
+  url: https://data.mlr.press/
+  color: "#7c3aed"
+
+"SIGGRAPH":
+  url: https://s2026.siggraph.org/
+  color: "#b31b1b"

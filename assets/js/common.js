@@ -17,6 +17,27 @@ $(document).ready(function () {
   });
   $("a").removeClass("waves-effect waves-light");
 
+  // keep the custom news scrollbar visible and in sync on macOS
+  $(".news-scroll").each(function () {
+    const news = this;
+    const thumb = news.parentElement.querySelector(".news-scrollbar-thumb");
+
+    const updateNewsScrollbar = function () {
+      const trackHeight = thumb.parentElement.clientHeight;
+      const thumbHeight = Math.max(32, trackHeight * (news.clientHeight / news.scrollHeight));
+      const scrollRange = news.scrollHeight - news.clientHeight;
+      const thumbRange = trackHeight - thumbHeight;
+      const thumbOffset = scrollRange > 0 ? (news.scrollTop / scrollRange) * thumbRange : 0;
+
+      thumb.style.height = `${thumbHeight}px`;
+      thumb.style.transform = `translateY(${thumbOffset}px)`;
+    };
+
+    news.addEventListener("scroll", updateNewsScrollbar, { passive: true });
+    window.addEventListener("resize", updateNewsScrollbar);
+    updateNewsScrollbar();
+  });
+
   // bootstrap-toc
   if ($("#toc-sidebar").length) {
     // remove related publications years from the TOC
