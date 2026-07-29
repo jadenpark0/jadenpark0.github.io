@@ -1179,9 +1179,10 @@ ninja-keys::part(ninja-input-wrapper) {
 
 .news-scroll {
   --news-row-height: 3.25rem;
-  --news-list-gap: 0.75rem;
 
-  height: calc(5 * var(--news-row-height) + var(--news-list-gap));
+  // Keep these values explicit: the production CSS minifier corrupts
+  // multiplication and custom properties used together inside calc().
+  height: 17rem;
   padding-right: 18px;
   overflow-y: scroll;
   scrollbar-width: none;
@@ -1196,12 +1197,12 @@ ninja-keys::part(ninja-input-wrapper) {
   }
 
   tr:nth-child(5) {
-    height: calc(var(--news-row-height) + var(--news-list-gap));
+    height: 4rem;
   }
 
   tr:nth-child(5) th,
   tr:nth-child(5) td {
-    padding-bottom: calc(1px + var(--news-list-gap));
+    padding-bottom: 0.8125rem;
   }
 
   th,
