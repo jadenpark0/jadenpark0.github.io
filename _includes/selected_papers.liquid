@@ -1,3 +1,44 @@
+<div class="topic-filter" role="group" aria-label="Filter publications by topic"></div>
+
 <div class="publications">
   {% bibliography --group_by none --query @*[selected=true]* %}
 </div>
+
+<script>
+  (function () {
+    const filter = document.currentScript.previousElementSibling.previousElementSibling;
+    const items = filter.nextElementSibling.querySelectorAll("li");
+    const topicsOf = (li) => {
+      const row = li.querySelector("[data-topics]");
+      return row ? row.dataset.topics.split(/\s*,\s*/).filter(Boolean) : [];
+    };
+
+    // Bubble order; topics not listed here are appended in the order they first appear.
+    const order = ["Physical AI", "Exploration", "LM Agents", "Compositional", "Contamination", "In-Context Learning", "AI Application", "Theory"];
+    const seen = new Set();
+    items.forEach((li) => topicsOf(li).forEach((t) => seen.add(t)));
+    const topics = order.filter((t) => seen.has(t)).concat([...seen].filter((t) => !order.includes(t)));
+
+    let active = null;
+    const apply = () => {
+      items.forEach((li) => {
+        li.hidden = active !== null && !topicsOf(li).includes(active);
+      });
+      filter.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.topic === active));
+    };
+
+    topics.forEach((t) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "topic-bubble";
+      b.dataset.topic = t;
+      b.textContent = t;
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", () => {
+        active = active === t ? null : t;
+        apply();
+      });
+      filter.appendChild(b);
+    });
+  })();
+</script>

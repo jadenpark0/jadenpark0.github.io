@@ -663,6 +663,39 @@ footer.sticky-bottom {
   margin-bottom: 1rem;
 }
 
+.topic-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.topic-bubble {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.75rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--global-text-color-light);
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    color: var(--global-theme-color);
+    border-color: var(--global-theme-color);
+  }
+
+  &[aria-pressed="true"] {
+    color: var(--global-bg-color);
+    background-color: var(--global-theme-color);
+    border-color: var(--global-theme-color);
+  }
+}
+
+.publications li[hidden] {
+  display: none;
+}
+
 .publications {
   margin-top: 2rem;
 
