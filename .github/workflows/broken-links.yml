@@ -32,21 +32,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install link checker
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/lychee-bin"
+          gh release download lychee-v0.23.0 --repo lycheeverse/lychee --pattern lychee-x86_64-unknown-linux-gnu.tar.gz --dir "$RUNNER_TEMP/lychee-bin"
+          tar -xzf "$RUNNER_TEMP/lychee-bin/lychee-x86_64-unknown-linux-gnu.tar.gz" -C "$RUNNER_TEMP/lychee-bin"
+          echo "$RUNNER_TEMP/lychee-bin" >> "$GITHUB_PATH"
       - name: Link Checker 🔗
-        uses: lycheeverse/lychee-action@v2
-        with:
-          lycheeVersion: v0.23.0
-          fail: true
-          args: |
-            --user-agent 'curl/7.54'
-            --root-dir "$GITHUB_WORKSPACE"
-            --exclude-path README.md
-            --exclude-path _pages/404.md
-            --accept '200,403,429'
-            --exclude 'doi\.org/10\.1145/3799902\.3811186'
-            --exclude 'github\.com/adobe-research/obj-and-mat-selection'
-            --exclude 'amd\.com'
-            --verbose
-            --no-progress
-            './**/*.md'
-            './**/*.html'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          lychee --user-agent 'curl/7.54' \
+          --root-dir "$GITHUB_WORKSPACE" \
+          --exclude-path README.md \
+          --exclude-path _pages/404.md \
+          --accept '200,403,429' \
+          --exclude 'doi\.org/10\.1145/3799902\.3811186' \
+          --exclude 'github\.com/adobe-research/obj-and-mat-selection' \
+          --exclude 'amd\.com' \
+          --verbose \
+          --no-progress \
+          './**/*.md' \
+          './**/*.html'
