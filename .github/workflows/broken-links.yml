@@ -35,6 +35,7 @@ jobs:
       - name: Link Checker 🔗
         uses: lycheeverse/lychee-action@v2
         with:
+          lycheeVersion: v0.23.0
           fail: true
           args: |
             --user-agent 'curl/7.54'
