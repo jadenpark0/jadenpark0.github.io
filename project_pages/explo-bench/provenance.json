@@ -1,0 +1,154 @@
+{
+  "dataset": "jpark677/mee_logs",
+  "revision": "d33ac33f18afc26ef53f4d1d029381d75d6857ad",
+  "source_commit": "2ec7c3a76b3864463772c14e8c7cd5ca24abf5a7",
+  "builder_sha256": "6241f353429420cb407553127ad8d00d676d3a92abfc44ac644fb198abc1127b",
+  "input_strategy": "Revision-pinned HF Hub pull; unchanged files verified against local Git index blob IDs.",
+  "built_at": "2026-10-07T23:17:24.239113+00:00",
+  "models": 29,
+  "evaluations": 14500,
+  "maps": 250,
+  "failure_definition": ["excessive_reasoning_context_exhausted", "excessive_reasoning_output_exhausted"],
+  "token_definition": "Token plots use generated completion tokens divided by actual recorded agent turns across reasoning trajectories. Completion tokens include native reasoning and visible replies, retry attempts and terminal overflow calls. Context-limit requests rejected before generation contribute zero output; other missing usage is excluded, never imputed. Input-history tokens are excluded. Earlier input + output aggregates are retained separately.",
+  "error_definition": "Pooled error count divided by pooled eligible-step count; mixed steps contribute to both denominators.",
+  "regression": "Unweighted OLS: success fraction ~ log10(error fraction), across model configurations.",
+  "excluded": [
+    {
+      "model": "v2/open_weight/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8",
+      "coverage": {
+        "default": 250
+      },
+      "reason": "incomplete paired 500-evaluation grid"
+    }
+  ],
+  "whole_run_selection": [
+    {
+      "model": "v2/open_weight/ibm-granite/granite-4.1-8b",
+      "method": "preserved previously audited whole-run cohort",
+      "selected": 500,
+      "discarded": 500
+    }
+  ],
+  "input_sha256": "ca369a804d945878601b994071c9c0ce9d652279505a193f012229f7a1b24905",
+  "data_sha256": "7c188a787eed74e95eb762396dd188ca57a151d717b33be8e4e488f85fabb0bc",
+  "sizes": {
+    "GLM-5.2-FP8": {
+      "hub_id": "zai-org/GLM-5.2-FP8",
+      "total_parameters": 753329940480
+    },
+    "Kimi-K2.6": {
+      "hub_id": "moonshotai/Kimi-K2.6",
+      "total_parameters": 1026879376368
+    },
+    "Hy3": {
+      "hub_id": "tencent/Hy3",
+      "total_parameters": 298786155776
+    },
+    "Muse-Glimmer-30B": {
+      "hub_id": "meta-models/Muse-Glimmer-30B",
+      "total_parameters": 29776626688
+    },
+    "Qwen3.6-35B-A3B": {
+      "hub_id": "Qwen/Qwen3.6-35B-A3B",
+      "total_parameters": 35951822704
+    },
+    "gemma-4-31B-it": {
+      "hub_id": "google/gemma-4-31B-it",
+      "total_parameters": 31273088876
+    },
+    "MiniMax-M3": {
+      "hub_id": "MiniMaxAI/MiniMax-M3",
+      "total_parameters": 427040140160
+    },
+    "DeepSeek-V4-Flash": {
+      "hub_id": "deepseek-ai/DeepSeek-V4-Flash",
+      "total_parameters": 290944616402
+    },
+    "Qwen3.6-27B": {
+      "hub_id": "Qwen/Qwen3.6-27B",
+      "total_parameters": 27781427952
+    },
+    "Inkling-FP8-block": {
+      "hub_id": "RedHatAI/Inkling-FP8-block",
+      "total_parameters": 952433361994
+    },
+    "Inkling-Small": {
+      "hub_id": "thinkingmachines/Inkling-Small",
+      "total_parameters": 265956439090
+    },
+    "gemma-4-26B-A4B-it": {
+      "hub_id": "google/gemma-4-26B-A4B-it",
+      "total_parameters": 25805936206
+    },
+    "Ministral-3-14B-Reasoning-2512": {
+      "hub_id": "mistralai/Ministral-3-14B-Reasoning-2512",
+      "total_parameters": 13945031680
+    },
+    "Qwen3.5-9B": {
+      "hub_id": "Qwen/Qwen3.5-9B",
+      "total_parameters": 9653104368
+    },
+    "GLM-4.7-Flash": {
+      "hub_id": "zai-org/GLM-4.7-Flash",
+      "total_parameters": 31221488576
+    },
+    "gemma-4-12B-it": {
+      "hub_id": "google/gemma-4-12B-it",
+      "total_parameters": 11959730224
+    },
+    "Magistral-Small-2509": {
+      "hub_id": "mistralai/Magistral-Small-2509",
+      "total_parameters": 24011361280
+    },
+    "Ministral-3-8B-Reasoning-2512": {
+      "hub_id": "mistralai/Ministral-3-8B-Reasoning-2512",
+      "total_parameters": 8918026240
+    },
+    "Qwen3.5-4B": {
+      "hub_id": "Qwen/Qwen3.5-4B",
+      "total_parameters": 4659865088
+    },
+    "NVIDIA-Nemotron-3-Nano-30B-A3B-BF16": {
+      "hub_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16",
+      "total_parameters": 31577937344
+    },
+    "Qwen3.5-2B": {
+      "hub_id": "Qwen/Qwen3.5-2B",
+      "total_parameters": 2274069824
+    },
+    "granite-4.1-8b": {
+      "hub_id": "ibm-granite/granite-4.1-8b",
+      "total_parameters": 8791592960
+    },
+    "Qwen3.5-122B-A10B": {
+      "hub_id": "Qwen/Qwen3.5-122B-A10B",
+      "total_parameters": 125086497008
+    },
+    "Olmo-3.1-32B-Think": {
+      "hub_id": "allenai/Olmo-3.1-32B-Think",
+      "total_parameters": 32233522176
+    },
+    "Hunyuan-A13B-Instruct": {
+      "hub_id": "tencent/Hunyuan-A13B-Instruct",
+      "total_parameters": 80393183232
+    },
+    "Seed-OSS-36B-Instruct": {
+      "hub_id": "ByteDance-Seed/Seed-OSS-36B-Instruct",
+      "total_parameters": 36151104512
+    },
+    "Qwen3.8-27B": {
+      "hub_id": "Qwen/Qwen3.8-27B",
+      "total_parameters": 27781427952
+    },
+    "Mistral-Small-4-119B-2603": {
+      "hub_id": "mistralai/Mistral-Small-4-119B-2603",
+      "total_parameters": 119401317952
+    },
+    "Qwen3.5-397B-A17B": {
+      "hub_id": "Qwen/Qwen3.5-397B-A17B",
+      "total_parameters": 403397928944
+    }
+  },
+  "v1_revision": "d33ac33f18afc26ef53f4d1d029381d75d6857ad",
+  "v1_source_sha256": "013f5552b81a1af4c8d3c11eb9eda21416abf9d9ff179e2cf4cf4109bd360ea7"
+}

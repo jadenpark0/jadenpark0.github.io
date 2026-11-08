@@ -1,0 +1,9 @@
+Model organization logos are provided by @lobehub/icons-static-svg v1.95.1
+(MIT license), with the exceptions recorded in logos/original-sources.json.
+Additional AI2 and ByteDance logo sources and checksums: logos/sources.json.
+Package: https://www.npmjs.com/package/@lobehub/icons-static-svg/v/1.95.1
+Logo trademarks belong to their respective organizations.
+
+The Kimi mark uses its source blue for the white K path so it remains visible
+on the website's light backgrounds. The original checksum is retained in
+logos/original-sources.json.
