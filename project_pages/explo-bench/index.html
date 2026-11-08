@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="(EXPLO)²-Bench measures agents’ exploration and exploitation errors beyond task success. Explore results, maps, trajectories, and efficiency analyses."
+    />
+    <meta name="theme-color" content="#0f766e" />
+    <title>(EXPLO)²-Bench — Beyond success</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css?rev=budget-takeaway-list-20261108" />
+    <script src="data.js" defer></script>
+    <script src="app.js?rev=long-horizon-takeaway-20261108" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#leaderboard">Skip to results</a>
+    <header class="site-header">
+      <div class="nav-wrap">
+        <a href="#" class="wordmark">(EXPLO)<sup>2</sup><span>-Bench</span></a>
+        <nav aria-label="Main navigation">
+          <a href="#leaderboard">Leaderboard</a><a href="#maps">Maps</a><a href="#trajectories">Trajectories</a><a href="#analysis">Analysis</a
+          ><a href="#citation">Citation</a>
+        </nav>
+        <a class="nav-code" href="https://github.com/jadenpark0/measurable-explore-exploit" aria-label="View code on GitHub"
+          ><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 .8a11.2 11.2 0 0 0-3.5 21.84c.55.1.75-.24.75-.54v-2.08c-3.06.67-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-1-.69.08-.68.08-.68 1.1.08 1.69 1.13 1.69 1.13.98 1.68 2.57 1.2 3.2.92.1-.71.38-1.2.7-1.48-2.44-.28-5-1.22-5-5.54 0-1.23.44-2.23 1.15-3.01-.11-.28-.5-1.43.11-2.98 0 0 .94-.3 3.08 1.15a10.66 10.66 0 0 1 5.6 0c2.14-1.45 3.07-1.15 3.07-1.15.62 1.55.23 2.7.12 2.98.71.78 1.14 1.78 1.14 3.01 0 4.33-2.57 5.26-5.01 5.53.39.34.74 1.02.74 2.07v3.05c0 .3.2.65.76.54A11.2 11.2 0 0 0 12 .8Z"
+            /></svg
+        ></a>
+      </div>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="title">
+        <h1 id="title">(EXPLO)<sup>2</sup><span>-Bench</span></h1>
+        <p class="paper-title">
+          Scrutinizing Agent’s Exploration and<br class="desktop-break" />
+          Exploitation Errors Beyond Success
+        </p>
+        <p class="authors">
+          <span><a href="https://jadenpark0.github.io/">Jaden Park</a><sup>1,†</sup></span
+          ><span><a href="https://jungtaekkim.github.io/">Jungtaek Kim</a><sup>2,†</sup></span
+          ><span><a href="https://sites.google.com/view/jongwonjeong">Jongwon Jeong</a><sup>1,*</sup></span
+          ><span><a href="https://www.linkedin.com/in/mahdi-ghodsi-vancouver/">Mahdi Ghodsi</a><sup>3,*</sup></span
+          ><span><a href="https://pages.cs.wisc.edu/~yongjaelee/">Yong Jae Lee</a><sup>1</sup></span>
+        </p>
+        <p class="affiliations">
+          <span
+            ><sup>1</sup> University of Wisconsin–Madison
+            <img class="affiliation-logo affiliation-wisconsin" src="assets/affiliations/wisconsin.svg" alt="" /></span
+          ><span
+            ><sup>2</sup> University of Arkansas
+            <img class="affiliation-logo affiliation-arkansas" src="assets/affiliations/arkansas.svg" alt="" /></span
+          ><span><sup>3</sup> AMD <img class="affiliation-logo affiliation-amd" src="assets/affiliations/amd.svg" alt="" /></span>
+        </p>
+        <p class="contribution">† and * denote equal contribution.</p>
+        <div class="resource-links">
+          <a href="https://arxiv.org/abs/2604.13151">📄 Paper</a
+          ><a href="https://jjj-madison.github.io/measurable-explore-exploit/">🌐 Project page</a
+          ><a href="https://github.com/jadenpark0/measurable-explore-exploit">💻 Code</a>
+        </div>
+      </section>
+
+      <section id="abstract" class="section abstract-section" aria-labelledby="abstract-title">
+        <h2 id="abstract-title">Abstract</h2>
+        <p class="section-intro">
+          Extending our work on <a class="text-link" href="https://arxiv.org/abs/2604.13151">“Measurable Exploration and Exploitation Errors”</a>, we
+          generate <strong>250 diverse maps</strong> spanning five task difficulty levels and five exploration-demand levels, varying both the
+          complexity of the tasks and the effort required to discover them. We evaluate <strong>29 open-source models</strong> with and without
+          reasoning outputs. Beyond task success rates, we measure
+          <strong>exploration and exploitation errors, budget use, and reasoning costs</strong> to examine how models discover useful information, act
+          on what they have learned, and spend resources along the way. Together, these evaluations show where agents struggle to explore and exploit,
+          and how reasoning changes their performance and resource use.
+        </p>
+      </section>
+
+      <section id="leaderboard" class="section results" aria-labelledby="results-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">01 / RESULTS</div>
+            <h2 id="results-title">Beyond a single success rate</h2>
+          </div>
+        </div>
+        <p class="section-intro">
+          Successful agents can still explore inefficiently or misuse what they have learned. We measure exploration and exploitation errors alongside
+          task success, and verify that both errors are strongly correlated with task success.
+        </p>
+        <div class="mode-bar">
+          <div class="segmented figure-mode" role="group" aria-label="Figure 1 evaluation mode">
+            <button data-mode="all" aria-pressed="true">Combined <span>500</span></button
+            ><button data-mode="default" aria-pressed="false">Default <span>250</span></button
+            ><button data-mode="reasoning" aria-pressed="false">Reasoning <span>250</span></button>
+          </div>
+          <p id="coverage" class="coverage" aria-live="polite"></p>
+        </div>
+        <div class="chart-grid">
+          <figure class="chart-card">
+            <div class="chart-head">
+              <h3>Exploration error vs. success</h3>
+              <span id="r2-exploration" class="r2"></span>
+            </div>
+            <div id="exploration-plot" class="plot"></div>
+          </figure>
+          <figure class="chart-card">
+            <div class="chart-head">
+              <h3>Exploitation error vs. success</h3>
+              <span id="r2-exploitation" class="r2"></span>
+            </div>
+            <div id="exploitation-plot" class="plot"></div>
+          </figure>
+        </div>
+        <p class="figure-note">
+          <strong>Figure 1.</strong> Relationship between task success and exploration error (left) or exploitation error (right). Dashed lines show
+          ordinary least-squares regressions of success rate on log₁₀ error rate, with each model weighted equally; R² reports the corresponding
+          goodness of fit. DeepSeek V4 Flash and Qwen 3.6 27B are excluded from the reasoning-condition regression fits and R² calculations because
+          their trajectories frequently terminate at reasoning limits.
+        </p>
+        <div class="legend" id="provider-legend" aria-label="Model organizations"></div>
+        <div class="table-title">
+          <h3>Leaderboard</h3>
+          <span class="small-note">Click a column to sort</span>
+        </div>
+        <div class="mode-bar">
+          <div class="segmented table-mode" role="group" aria-label="Leaderboard table evaluation mode">
+            <button data-mode="all" aria-pressed="true">Combined <span>500</span></button
+            ><button data-mode="default" aria-pressed="false">Default <span>250</span></button
+            ><button data-mode="reasoning" aria-pressed="false">Reasoning <span>250</span></button>
+          </div>
+          <p id="table-coverage" class="coverage" aria-live="polite"></p>
+        </div>
+        <div class="table-scroll">
+          <table id="leaderboard-table">
+            <caption class="sr-only">
+              Model leaderboard
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col" class="rank">#</th>
+                <th scope="col" aria-sort="none">
+                  <button data-sort="name">Model <span>↕</span></button>
+                </th>
+                <th scope="col" aria-sort="descending">
+                  <button data-sort="success">Success rate <span>↓</span></button>
+                </th>
+                <th scope="col" aria-sort="none">
+                  <button data-sort="exploration">Exploration error <span>↕</span></button>
+                </th>
+                <th scope="col" aria-sort="none">
+                  <button data-sort="exploitation">Exploitation error <span>↕</span></button>
+                </th>
+                <th scope="col" aria-sort="none">
+                  <button data-sort="budget">Budget on success <span>↕</span></button>
+                </th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="method-note">
+          <p>
+            <strong>Reading the table.</strong> Higher success is better; lower errors and lower budget use are better. Error rates pool counts across
+            eligible steps. Budget on success is the mean fraction of the available action budget used by successful runs. Note that low budget on
+            success does not necessarily indicate a better model: a model may succeed on only a few easy tasks and use little budget on those
+            successes while failing on harder tasks. This metric should therefore be interpreted alongside the overall success rate.
+            <span id="mode-note"></span>
+          </p>
+        </div>
+      </section>
+
+      <section id="maps" class="section" aria-labelledby="maps-title">
+        <div class="section-head">
+          <div><h2 id="maps-title" class="eyebrow">02 / ENVIRONMENT DESIGN</h2></div>
+        </div>
+        <p class="section-intro">
+          An agent moves through a 2D partially observable grid to discover task nodes, whose dependencies are modeled by directed acyclic graphs
+          (DAGs). The agent must explore the map to discover the task nodes and their dependency graph, then exploit the knowledge acquired through
+          past encounters to complete the tasks.
+        </p>
+        <figure class="environment-overview">
+          <img
+            src="assets/paper/figure2.png"
+            alt="Task dependency graph and 2D grid illustrating the agent’s partial observations and identification of exploration and exploitation errors."
+            width="2028"
+            height="592"
+          />
+          <figcaption class="figure-note">
+            <strong>Figure 2.</strong> Task dependencies, partial observability, and action-level error identification in the grid environment. The
+            agent discovers task nodes through exploration and uses its accumulated knowledge to satisfy their prerequisites and reach the goal.
+          </figcaption>
+        </figure>
+        <p class="section-intro">
+          Two independent axes control difficulty: the area of the space to explore and the complexity of task dependencies. Open cells are
+          traversable; total cells include non-traversable cells (walls). Each task-DAG tier is crossed with five exploration levels and ten seeds.
+          Below are examples of the generated maps and task DAGs.
+        </p>
+        <div class="table-scroll difficulty-wrap">
+          <table id="difficulty-table">
+            <caption>
+              Five task-DAG difficulties · 50 maps per difficulty
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Difficulty</th>
+                <th scope="col">Task nodes</th>
+                <th scope="col">Mean open cells</th>
+                <th scope="col">Open-cell range</th>
+                <th scope="col">Mean total cells</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="map-toolbar">
+          <div class="segmented difficulty-mode" role="group" aria-label="Task-DAG difficulty">
+            <button data-difficulty="easier" aria-pressed="false">Easier</button><button data-difficulty="easy" aria-pressed="false">Easy</button
+            ><button data-difficulty="medium" aria-pressed="false">Medium</button><button data-difficulty="hard" aria-pressed="false">Hard</button
+            ><button data-difficulty="harder" aria-pressed="true">Harder</button>
+          </div>
+        </div>
+        <figure class="map-figure">
+          <div class="map-description">
+            <h3 id="map-heading"></h3>
+            <span id="map-info" class="small-note"></span>
+          </div>
+          <img id="map-image" src="assets/maps/harder-higher-s0008.png" alt="Large grid map with a harder task dependency graph" />
+          <figcaption id="map-caption"></figcaption>
+        </figure>
+        <div class="sample-pager" aria-label="Map examples">
+          <button id="previous-map" aria-label="Previous map sample">‹</button>
+          <div class="sample-position">
+            <div id="sample-dots" class="sample-dots" role="group" aria-label="Choose a map example"></div>
+            <span id="sample-count" aria-live="polite">1 / 5</span>
+          </div>
+          <button id="next-map" aria-label="Next map sample">›</button>
+        </div>
+      </section>
+
+      <section id="trajectories" class="section" aria-labelledby="trajectories-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">03 / QUALITATIVE ANALYSIS BEYOND SUCCESS</div>
+            <h2 id="trajectories-title">Two successful runs can show different behavior</h2>
+          </div>
+        </div>
+        <div class="table-scroll trajectory-summary">
+          <table>
+            <caption class="sr-only">
+              Comparison of two successful runs on the same task
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Outcome</th>
+                <th scope="col">Steps</th>
+                <th scope="col">Exploration errors</th>
+                <th scope="col">Exploitation errors</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">HY3</th>
+                <td>Success</td>
+                <td>148</td>
+                <td>12</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <th scope="row">GPT-OSS-120B</th>
+                <td>Success</td>
+                <td>188</td>
+                <td>0</td>
+                <td>52</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="section-intro">
+          HY3 and GPT-OSS-120B both complete the task but their trajectories reveal different sources of error. HY3 finishes the task with
+          <strong>no exploitation errors</strong> while GPT-OSS-120B finishes with <strong>no exploration errors</strong>. Our metric reveals
+          differences in how models discover information and act on what they have learned beyond success.
+        </p>
+        <div class="trajectory-shared-legend">
+          <img
+            src="assets/trajectories/shared-legend.svg"
+            alt="Shared legend for all trajectories: grid visibility, task and gate states, dependency edges, exploration and exploitation errors."
+            loading="lazy"
+          />
+        </div>
+        <figure class="trajectory-comparison">
+          <article class="demo-card">
+            <div class="demo-head">
+              <div>
+                <h3>01 / Success without exploitation errors</h3>
+                <p>HY3 · default-exploration<br />Hard DAG · High exploration</p>
+                <p class="demo-milestones">
+                  Goal discovered at step <strong>48</strong> → prerequisites resolved → goal activated at step <strong>148</strong>.
+                </p>
+              </div>
+              <span class="badge">Success</span>
+            </div>
+            <img
+              class="demo-image"
+              src="assets/trajectories/hy3-comparison.gif"
+              data-gif="assets/trajectories/hy3-comparison.gif"
+              data-poster="assets/trajectories/hy3-comparison.png"
+              alt="Successful HY3 trajectory on the shared map, with cumulative exploration errors rising while exploitation errors remain at zero."
+              loading="lazy"
+            />
+            <div class="demo-stats">
+              <span>Steps <strong>148 / 210</strong></span
+              ><span>Budget <strong>70.5%</strong></span
+              ><span>Exploration errors <strong>12</strong></span
+              ><span>Exploitation errors <strong>0</strong></span
+              ><button class="demo-toggle" data-paused="false" aria-label="Pause HY3 animation">Pause animation</button>
+            </div>
+          </article>
+          <article class="demo-card">
+            <div class="demo-head">
+              <div>
+                <h3>02 / Success without exploration errors</h3>
+                <p>GPT-OSS 120B · default-exploration<br />Hard DAG · High exploration</p>
+                <p class="demo-milestones">
+                  Goal discovered at step <strong>22</strong> → prerequisites resolved → goal activated at step <strong>188</strong>.
+                </p>
+              </div>
+              <span class="badge">Success</span>
+            </div>
+            <img
+              class="demo-image"
+              src="assets/trajectories/gpt-oss-120b-comparison.gif"
+              data-gif="assets/trajectories/gpt-oss-120b-comparison.gif"
+              data-poster="assets/trajectories/gpt-oss-120b-comparison.png"
+              alt="Successful GPT-OSS 120B trajectory on the same map, with cumulative exploitation errors rising while exploration errors remain at zero."
+              loading="lazy"
+            />
+            <div class="demo-stats">
+              <span>Steps <strong>188 / 210</strong></span
+              ><span>Budget <strong>89.5%</strong></span
+              ><span>Exploration errors <strong>0</strong></span
+              ><span>Exploitation errors <strong>52</strong></span
+              ><button class="demo-toggle" data-paused="false" aria-label="Pause GPT-OSS 120B animation">Pause animation</button>
+            </div>
+          </article>
+          <figcaption class="figure-note">
+            <strong>Figure 3.</strong> Successful trajectories on the same map and task DAG under the default-exploration prompt. The animations show
+            the agent’s observed grid, discovered task dependencies, and cumulative errors after each action. HY3’s errors accumulate during
+            exploration; GPT-OSS 120B’s errors accumulate during exploitation. These runs illustrate why task success alone does not capture how
+            efficiently an agent explores and uses acquired knowledge.
+          </figcaption>
+        </figure>
+        <h3 class="analysis-subheading">Further Examples of Agent Behavior</h3>
+        <p class="section-intro">
+          The following three illustrations show additional patterns of agent behavior, from efficient task completion to budget exhaustion and
+          accumulating exploration and exploitation errors.
+        </p>
+        <div id="demo-list" class="demo-list"></div>
+      </section>
+
+      <section id="analysis" class="section" aria-labelledby="analysis-title">
+        <div class="section-head">
+          <div><div id="analysis-title" class="eyebrow">04 / ADDITIONAL ANALYSIS</div></div>
+        </div>
+        <div id="model-size-analysis" class="analysis-block">
+          <h3 class="analysis-subheading">Model size</h3>
+          <p class="section-intro">We compare exploration and exploitation errors versus total parameter count, including inactive MoE experts.</p>
+          <div class="analysis-mode">
+            <div class="segmented size-mode" role="group" aria-label="Model-size figure evaluation mode">
+              <button data-mode="all" aria-pressed="true">Combined <span>500</span></button
+              ><button data-mode="default" aria-pressed="false">Default <span>250</span></button
+              ><button data-mode="reasoning" aria-pressed="false">Reasoning <span>250</span></button>
+            </div>
+          </div>
+          <div class="chart-grid">
+            <figure class="chart-card">
+              <div class="chart-head"><h3>Exploration error vs. model size</h3></div>
+              <div id="size-exploration-plot" class="plot"></div>
+            </figure>
+            <figure class="chart-card">
+              <div class="chart-head"><h3>Exploitation error vs. model size</h3></div>
+              <div id="size-exploitation-plot" class="plot"></div>
+            </figure>
+          </div>
+          <p class="figure-note">
+            Exploration and exploitation errors as a function of total model parameters. Both axes use logarithmic scales. Dashed lines connect
+            Pareto-optimal models: no other model achieves an equal or lower error rate with an equal or smaller parameter count and a strict
+            improvement in at least one quantity. Parameter counts include inactive experts in mixture-of-experts models.
+          </p>
+        </div>
+        <div id="token-usage-analysis" class="analysis-block">
+          <h3 class="analysis-subheading">Token usage <span class="version-label">Reasoning only · 250</span></h3>
+          <p class="section-intro">
+            We compare exploration and exploitation errors with the <strong>average number of output tokens generated</strong> per agent turn, using
+            reasoning runs on 250 maps per model. For each model, we divide the total output tokens across these runs by the total number of recorded
+            turns. Output tokens include both the model’s reasoning and its visible action responses, including output from retries and the final
+            generation attempt when a limit is reached. Input tokens, including conversation history, are excluded. Requests rejected for exceeding
+            the context limit before generation contribute no output tokens.
+          </p>
+          <div class="chart-grid">
+            <figure class="chart-card">
+              <div class="chart-head"><h3>Exploration error vs. output tokens</h3></div>
+              <div id="token-exploration-plot" class="plot"></div>
+            </figure>
+            <figure class="chart-card">
+              <div class="chart-head"><h3>Exploitation error vs. output tokens</h3></div>
+              <div id="token-exploitation-plot" class="plot"></div>
+            </figure>
+          </div>
+          <p class="figure-note">
+            Exploration and exploitation errors as a function of mean generated output tokens per agent turn in the reasoning condition. Both axes use
+            logarithmic scales; dashed lines indicate the Pareto frontier across models with complete output-token accounting, minimizing error and
+            token cost jointly. For trajectories terminated by context or output limits, token totals include the final generation attempt, while
+            errors are measured only over observed actions. Low measured cost or error in these truncated trajectories therefore need not indicate
+            successful task completion.
+          </p>
+        </div>
+        <h3 class="analysis-subheading">Two types of budget failures</h3>
+        <p class="section-intro">
+          Budget failures during evaluation occur when an agent exhausts either its context window or its output-token budget before producing the
+          next action. We analyze reasoning runs on 250 maps per model.
+        </p>
+        <ul class="failure-definition">
+          <li>
+            <strong>Context limit:</strong> the conversation and prompt exceed the model’s context window. Reasoning traces accumulate across turns,
+            so excessive reasoning can exhaust this budget.
+          </li>
+          <li><strong>Output limit:</strong> reasoning exhausts the output-token budget before the model returns an action.</li>
+        </ul>
+        <ul id="failure-takeaway" class="failure-takeaway" aria-live="polite"></ul>
+        <div class="table-scroll">
+          <table id="failure-table">
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Failure rate</th>
+                <th scope="col">Success rate excluding<br />budget failures</th>
+                <th scope="col">Context failures</th>
+                <th scope="col">Output failures</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="summary" class="section" aria-labelledby="summary-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">05 / SUMMARY</div>
+            <h2 id="summary-title">Four takeaways</h2>
+          </div>
+        </div>
+        <ol id="takeaways" class="takeaways"></ol>
+      </section>
+
+      <section id="citation" class="section citation-section" aria-labelledby="citation-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">CITATION</div>
+            <h2 id="citation-title">Citation</h2>
+          </div>
+          <button id="copy-bibtex" class="copy-button">Copy BibTeX</button>
+        </div>
+        <p class="small-note">If you find this work useful, please cite our work:</p>
+        <pre><code id="bibtex">@misc{park2026explo2benchwebsite,
+  title = {{(EXPLO)$^2$-Bench}: Scrutinizing Agent's Exploration
+           and Exploitation Errors Beyond Success},
+  author = {Park, Jaden and Kim, Jungtaek and Jeong, Jongwon
+            and Ghodsi, Mahdi and Lee, Yong Jae},
+  year = {2026},
+  date = {2026-11-08},
+  url = {https://jadenpark0.github.io/project_pages/explo-bench/}
+}</code></pre>
+      </section>
+      <section class="acknowledgement">
+        <h3>Acknowledgements</h3>
+        <p>
+          This work was supported in part by NSF IIS2404180, National Research Foundation of Korea (NRF) grant (MSIT) (RS-2026-25522067) and Institute
+          of Information &amp; communications Technology Planning&amp; Evaluation (IITP) grants funded by the Korea government (MSIT) (No.
+          2022-0-00871, Development of AI Autonomy and Knowledge Enhancement for AI Agent Collaboration), (No. RS-2025-2543949. Environment-Aware and
+          Domain-Adaptive Multimodal Embodied AI for Real-World Interaction), and Electronics and Telecommunications Research Institute (ETRI) grant
+          (26CB1200, Development and Application of Science-Specialized Multimodal Foundation Models). This work used computing resources made
+          available through the AMD University Program (AUP) AI &amp; HPC Cluster. We thank AMD for providing AMD Instinct GPU compute resources
+          through AMD Dev Cloud.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <div>
+        <span class="wordmark small">(EXPLO)<sup>2</sup><span>-Bench</span></span>
+      </div>
+    </footer>
+    <div id="plot-tooltip" class="tooltip" role="tooltip" hidden></div>
+    <noscript><p class="noscript">Enable JavaScript to explore interactive results.</p></noscript>
+  </body>
+</html>

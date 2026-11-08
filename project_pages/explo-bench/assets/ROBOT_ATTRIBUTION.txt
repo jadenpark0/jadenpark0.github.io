@@ -1,0 +1,6 @@
+Robot icon source used by the grid marker:
+
+- File: `robot-one-svgrepo-com.svg`
+- Source: SVG Repo
+- URL: https://www.svgrepo.com/svg/388454/robot-one
+- License: CC0
