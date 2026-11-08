@@ -46,4 +46,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          lychee --offline --root-dir "$GITHUB_WORKSPACE/_site" --remap '_site(/?.*)/assets/(.*) _site/assets/$2' --verbose --no-progress '_site/**/*.html'
+          lychee --offline --root-dir "$GITHUB_WORKSPACE/_site" --remap '_site(/?.*)/assets/(.*) _site/assets/$2' --exclude-path _site/project_pages --verbose --no-progress '_site/**/*.html'
+          lychee --offline --root-dir "$GITHUB_WORKSPACE/_site" --verbose --no-progress '_site/project_pages/**/*.html'
