@@ -52,6 +52,7 @@ jobs:
           --exclude 'doi\.org/10\.1145/3799902\.3811186' \
           --exclude 'github\.com/adobe-research/obj-and-mat-selection' \
           --exclude 'amd\.com' \
+          --exclude '^https://www\.linkedin\.com/in/mahdi-ghodsi-vancouver/?$' \
           --verbose \
           --no-progress \
           './**/*.md' \
