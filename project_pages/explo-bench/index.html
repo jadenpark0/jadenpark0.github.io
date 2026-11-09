@@ -10,9 +10,9 @@
     <meta name="theme-color" content="#0f766e" />
     <title>(EXPLO)²-Bench — Beyond success</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="style.css?rev=single-line-subtitle-20261108" />
+    <link rel="stylesheet" href="style.css?rev=subtitle-responsive-20261108" />
     <script src="data.js" defer></script>
-    <script src="app.js?rev=long-horizon-takeaway-20261108" defer></script>
+    <script src="app.js?rev=plot-log-labels-20261108" defer></script>
   </head>
   <body>
     <a class="skip" href="#leaderboard">Skip to results</a>
@@ -75,10 +75,20 @@
         </p>
       </section>
 
+      <section id="summary" class="section" aria-labelledby="summary-title">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">01 / SUMMARY</div>
+            <h2 id="summary-title">Four takeaways</h2>
+          </div>
+        </div>
+        <ol id="takeaways" class="takeaways"></ol>
+      </section>
+
       <section id="leaderboard" class="section results" aria-labelledby="results-title">
         <div class="section-head">
           <div>
-            <div class="eyebrow">01 / RESULTS</div>
+            <div class="eyebrow">02 / RESULTS</div>
             <h2 id="results-title">Beyond a single success rate</h2>
           </div>
         </div>
@@ -111,16 +121,13 @@
           </figure>
         </div>
         <p class="figure-note">
-          <strong>Figure 1.</strong> Relationship between task success and exploration error (left) or exploitation error (right). Dashed lines show
-          ordinary least-squares regressions of success rate on log₁₀ error rate, with each model weighted equally; R² reports the corresponding
-          goodness of fit. DeepSeek V4 Flash and Qwen 3.6 27B are excluded from the reasoning-condition regression fits and R² calculations because
-          their trajectories frequently terminate at reasoning limits.
+          Relationship between task success and exploration error (left) or exploitation error (right). Dashed lines show ordinary least-squares
+          regressions of success rate on log₁₀ error rate, with each model weighted equally; R² reports the corresponding goodness of fit. DeepSeek V4
+          Flash and Qwen 3.6 27B are excluded from the reasoning-condition regression fits and R² calculations because their trajectories frequently
+          terminate at reasoning limits.
         </p>
         <div class="legend" id="provider-legend" aria-label="Model organizations"></div>
-        <div class="table-title">
-          <h3>Leaderboard</h3>
-          <span class="small-note">Click a column to sort</span>
-        </div>
+        <div class="table-title"><h3>Leaderboard</h3></div>
         <div class="mode-bar">
           <div class="segmented table-mode" role="group" aria-label="Leaderboard table evaluation mode">
             <button data-mode="all" aria-pressed="true">Combined <span>500</span></button
@@ -159,18 +166,17 @@
         </div>
         <div class="method-note">
           <p>
-            <strong>Reading the table.</strong> Higher success is better; lower errors and lower budget use are better. Error rates pool counts across
-            eligible steps. Budget on success is the mean fraction of the available action budget used by successful runs. Note that low budget on
-            success does not necessarily indicate a better model: a model may succeed on only a few easy tasks and use little budget on those
-            successes while failing on harder tasks. This metric should therefore be interpreted alongside the overall success rate.
-            <span id="mode-note"></span>
+            Higher success is better; lower errors and lower budget use are better. Error rates pool counts across eligible steps. Budget on success
+            is the mean fraction of the available action budget used by successful runs. Note that low budget on success does not necessarily indicate
+            a better model: a model may succeed on only a few easy tasks and use little budget on those successes while failing on harder tasks. This
+            metric should therefore be interpreted alongside the overall success rate. <span id="mode-note"></span>
           </p>
         </div>
       </section>
 
       <section id="maps" class="section" aria-labelledby="maps-title">
         <div class="section-head">
-          <div><h2 id="maps-title" class="eyebrow">02 / ENVIRONMENT DESIGN</h2></div>
+          <div><h2 id="maps-title" class="eyebrow">03 / ENVIRONMENT DESIGN</h2></div>
         </div>
         <p class="section-intro">
           An agent moves through a 2D partially observable grid to discover task nodes, whose dependencies are modeled by directed acyclic graphs
@@ -185,8 +191,9 @@
             height="592"
           />
           <figcaption class="figure-note">
-            <strong>Figure 2.</strong> Task dependencies, partial observability, and action-level error identification in the grid environment. The
-            agent discovers task nodes through exploration and uses its accumulated knowledge to satisfy their prerequisites and reach the goal.
+            Task dependencies, partial observability, and action-level error identification in the grid environment, from
+            <a class="text-link" href="https://arxiv.org/abs/2604.13151">our paper</a>. The agent discovers task nodes through exploration and uses
+            its accumulated knowledge to satisfy their prerequisites and reach the goal.
           </figcaption>
         </figure>
         <p class="section-intro">
@@ -239,7 +246,7 @@
       <section id="trajectories" class="section" aria-labelledby="trajectories-title">
         <div class="section-head">
           <div>
-            <div class="eyebrow">03 / QUALITATIVE ANALYSIS BEYOND SUCCESS</div>
+            <div class="eyebrow">04 / QUALITATIVE ANALYSIS BEYOND SUCCESS</div>
             <h2 id="trajectories-title">Two successful runs can show different behavior</h2>
           </div>
         </div>
@@ -343,10 +350,10 @@
             </div>
           </article>
           <figcaption class="figure-note">
-            <strong>Figure 3.</strong> Successful trajectories on the same map and task DAG under the default-exploration prompt. The animations show
-            the agent’s observed grid, discovered task dependencies, and cumulative errors after each action. HY3’s errors accumulate during
-            exploration; GPT-OSS 120B’s errors accumulate during exploitation. These runs illustrate why task success alone does not capture how
-            efficiently an agent explores and uses acquired knowledge.
+            Successful trajectories on the same map and task DAG under the default-exploration prompt. The animations show the agent’s observed grid,
+            discovered task dependencies, and cumulative errors after each action. HY3’s errors accumulate during exploration; GPT-OSS 120B’s errors
+            accumulate during exploitation. These runs illustrate why task success alone does not capture how efficiently an agent explores and uses
+            acquired knowledge.
           </figcaption>
         </figure>
         <h3 class="analysis-subheading">Further Examples of Agent Behavior</h3>
@@ -359,7 +366,7 @@
 
       <section id="analysis" class="section" aria-labelledby="analysis-title">
         <div class="section-head">
-          <div><div id="analysis-title" class="eyebrow">04 / ADDITIONAL ANALYSIS</div></div>
+          <div><div id="analysis-title" class="eyebrow">05 / ADDITIONAL ANALYSIS</div></div>
         </div>
         <div id="model-size-analysis" class="analysis-block">
           <h3 class="analysis-subheading">Model size</h3>
@@ -443,16 +450,6 @@
         </div>
       </section>
 
-      <section id="summary" class="section" aria-labelledby="summary-title">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">05 / SUMMARY</div>
-            <h2 id="summary-title">Four takeaways</h2>
-          </div>
-        </div>
-        <ol id="takeaways" class="takeaways"></ol>
-      </section>
-
       <section id="citation" class="section citation-section" aria-labelledby="citation-title">
         <div class="section-head">
           <div>
@@ -462,7 +459,7 @@
           <button id="copy-bibtex" class="copy-button">Copy BibTeX</button>
         </div>
         <p class="small-note">If you find this work useful, please cite our work:</p>
-        <pre><code id="bibtex">@misc{park2026explo2benchwebsite,
+        <pre><code id="bibtex">@misc{park2026explo2bench,
   title = {{(EXPLO)$^2$-Bench}: Scrutinizing Agent's Exploration
            and Exploitation Errors Beyond Success},
   author = {Park, Jaden and Kim, Jungtaek and Jeong, Jongwon
@@ -470,6 +467,14 @@
   year = {2026},
   date = {2026-11-08},
   url = {https://jadenpark0.github.io/project_pages/explo-bench/}
+}
+
+@article{park2026exploration,
+  title={Exploration and Exploitation Errors Are Measurable for Language Model Agents},
+  author={Jaden Park and Jungtaek Kim and Jongwon Jeong and Robert D. Nowak and Kangwook Lee and Yong Jae Lee},
+  journal={arXiv preprint arXiv:2604.13151},
+  year={2026},
+  url={https://arxiv.org/abs/2604.13151}
 }</code></pre>
       </section>
       <section class="acknowledgement">
@@ -479,9 +484,9 @@
           of Information &amp; communications Technology Planning&amp; Evaluation (IITP) grants funded by the Korea government (MSIT) (No.
           2022-0-00871, Development of AI Autonomy and Knowledge Enhancement for AI Agent Collaboration), (No. RS-2025-2543949. Environment-Aware and
           Domain-Adaptive Multimodal Embodied AI for Real-World Interaction), and Electronics and Telecommunications Research Institute (ETRI) grant
-          (26CB1200, Development and Application of Science-Specialized Multimodal Foundation Models). This work used computing resources made
-          available through the AMD University Program (AUP) AI &amp; HPC Cluster. We thank AMD for providing AMD Instinct GPU compute resources
-          through AMD Dev Cloud.
+          (26CB1200, Development and Application of Science-Specialized Multimodal Foundation Models). Jungtaek Kim acknowledges support from the
+          start-up grant of the University of Arkansas. This work used computing resources made available through the AMD University Program (AUP) AI
+          &amp; HPC Cluster. We thank AMD for providing AMD Instinct GPU compute resources through AMD Dev Cloud.
         </p>
       </section>
     </main>
