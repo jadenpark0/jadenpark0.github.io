@@ -1874,3 +1874,11 @@ ul.failure-takeaway {
 .failure-takeaway li + li {
   margin-top: 12px;
 }
+
+@media (min-width: 768px) {
+  .hero .paper-title {
+    max-width: none;
+    white-space: nowrap;
+    font-size: clamp(18px, 2vw, 26px);
+  }
+}
