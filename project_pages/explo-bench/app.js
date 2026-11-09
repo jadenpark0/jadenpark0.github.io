@@ -184,7 +184,7 @@ function scatter(selector, key, label, type = "regression", yKey = "success", vi
       : key === "output_tokens_per_turn"
         ? "Output / turn (log)"
         : `${label} (log)`
-    : `${label} · log scale`;
+    : `${label} (log)`;
   const edge = type === "regression" ? [] : frontier(rows, key, yKey),
     edgeModels = new Set(edge.map((m) => m.model));
   let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" data-x-key="${key}" data-y-key="${yKey}" data-mode="${viewMode}" data-frontier-cohort="all" data-x-min="${lo}" data-x-max="${hi}" data-y-min="${yLo}" data-y-max="${yHi}" aria-label="${esc(
@@ -405,23 +405,32 @@ function renderDemos() {
         )} animation">${reduced ? "Play animation" : "Pause animation"}</button></div></article>`
     )
     .join("");
-  $$(".trajectory-comparison .demo-image").forEach((img) => {
-    img.src = reduced ? img.dataset.poster : img.dataset.gif;
-    const b = img.closest(".demo-card").querySelector(".demo-toggle");
-    b.dataset.paused = String(reduced);
-    b.textContent = reduced ? "Play animation" : "Pause animation";
-    b.setAttribute("aria-label", b.textContent);
+  $$(".demo-card .demo-image").forEach((img) => {
+    const video = document.createElement("video");
+    video.className = img.className;
+    video.src = img.dataset.gif.replace(/\.gif(?=\?|$)/, ".mp4");
+    video.poster = img.dataset.poster;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.setAttribute("aria-label", img.alt);
+    const button = img.closest(".demo-card").querySelector(".demo-toggle");
+    const syncButton = () => {
+      button.dataset.paused = String(video.paused);
+      button.textContent = video.paused ? "Play animation" : "Pause animation";
+      button.setAttribute("aria-label", button.textContent);
+    };
+    video.addEventListener("play", syncButton);
+    video.addEventListener("pause", syncButton);
+    img.replaceWith(video);
+    button.addEventListener("click", () => {
+      if (video.paused) video.play().catch(syncButton);
+      else video.pause();
+    });
+    syncButton();
+    if (!reduced) video.play().catch(syncButton);
   });
-  $$(".demo-toggle").forEach((b) =>
-    b.addEventListener("click", () => {
-      const paused = b.dataset.paused === "true",
-        img = b.closest("article").querySelector("img");
-      img.src = paused ? img.dataset.gif : img.dataset.poster;
-      b.dataset.paused = String(!paused);
-      b.textContent = paused ? "Pause animation" : "Play animation";
-      b.setAttribute("aria-label", b.textContent);
-    })
-  );
 }
 function takeaways() {
   const fits = DATA.configurations.all.regressions;
