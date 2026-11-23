@@ -1,0 +1,3 @@
+Figure 2: https://arxiv.org/html/2604.13151v2/overall.png
+Paper: https://arxiv.org/abs/2604.13151
+License: CC BY-NC-SA 4.0 (as stated on the paper).
