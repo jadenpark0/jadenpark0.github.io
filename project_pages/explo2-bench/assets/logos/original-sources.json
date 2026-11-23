@@ -1,0 +1,32 @@
+{
+  "package": "@lobehub/icons-static-svg",
+  "version": "1.95.1",
+  "package_url": "https://www.npmjs.com/package/@lobehub/icons-static-svg/v/1.95.1",
+  "license": "MIT",
+  "assets": {
+    "anthropic": { "slug": "claude-color", "sha256": "a3101f3047a119aa11825ad9369510f0c472428c8c52d420e31bc62db44a8364" },
+    "deepseek": { "slug": "deepseek-color", "sha256": "deba5f98a5c1796e20fcac3149bcd7eb8a32f0bdd04d048819400b1f28bd1439" },
+    "google": { "slug": "gemini-color", "sha256": "8ab0a9bafec11f7e69bcb9fc4ffd8f1bc927d1ddcbbb6ff36dee5ae8b5a9d602" },
+    "ibm": { "slug": "ibm", "sha256": "62c37af8c3f191572921197a29c90687079e62d3033f503faae59cdc96af0fb2" },
+    "meta": { "slug": "meta-color", "sha256": "adf9f2c1a646ccd3a37ca8c2e7e5985d64630cd633f4b95fba393d1d44e0578c" },
+    "minimax": { "slug": "minimax-color", "sha256": "7f7187fa6d9b341ac5f22f6c5a970523afb439dc45566d64eb4f4b9b604d6b01" },
+    "mistral": { "slug": "mistral-color", "sha256": "722f74b289d95486b43662fe24fa883b333701296f618406cd0ed502299170b6" },
+    "moonshot": { "slug": "kimi-color", "sha256": "74a7292aeb0220445d14c5d397d75760e2e8c6ed6a9e5fe4f3023471bf62a9ff" },
+    "nvidia": { "slug": "nvidia-color", "sha256": "8c941e4eb8b782eccaaea1240c059d20be33ab8eda28d7c9ed9b53ac802fe683" },
+    "openai": { "slug": "openai", "sha256": "a595df6b423920c67a7f8f73c063e4bfb72d415948097b6cac063a2366bb5186" },
+    "qwen": { "slug": "qwen-color", "sha256": "77f5768c66d08ce1d3d14e73373975c1bc0454be88c81523ddd0ffd7e2974029" },
+    "redhat": {
+      "slug": "redhat",
+      "sha256": "3cc8f3ac421742fc9814e887ad651cc2b13df3ac983f99cae187bc8cdf69bee0",
+      "source": "https://cdn.simpleicons.org/redhat/EE0000"
+    },
+    "tencent": { "slug": "hunyuan-color", "sha256": "510e7bb438506b5aadfaf8b9551d1606efd5b4171161a64a64204c72a453658a" },
+    "thinkingmachines": {
+      "slug": "official-favicon",
+      "sha256": "a84378a8dbd3429e690b16d0936c33c2981c4bd65abb1f8ccd346f44191e7ed9",
+      "source": "https://thinkingmachines.ai/images/apple-touch-icon.png"
+    },
+    "zai": { "slug": "zhipu-color", "sha256": "8174e65ff71647d5c705c920c953a82bd723d9e3e42887bdd4ffc9dfe51207a0" }
+  },
+  "url_template": "https://unpkg.com/@lobehub/icons-static-svg@1.95.1/icons/{slug}.svg"
+}
